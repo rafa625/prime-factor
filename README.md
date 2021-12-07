@@ -33,39 +33,37 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+## CLI
+```bash
+# lista os comandos
+$ node cli list
 
-## Estratégia Aplicada
+# fatora com primos um número fornecido
+$ node cli factor
 
-### TDD
+# busca por novos números primos
+$ node cli discover
+```
 
-### Sem Loops
+## CLI
+```bash
+# lista os comandos
+$ node cli list
 
-### Nunca Recalcular
+# fatora com primos um número fornecido
+$ node cli factor
 
-### "Cache" em Memória
+# busca por novos números primos
+$ node cli discover
+```
 
-### Persistência em Disco
+## API
+```bash
+# fatora com primos um número fornecido
+# retorna fatores primos e lista de divisores
+$ curl --request GET \ --url http://localhost:3003/factor/1682022777525
 
-## Linter
-
-
-## Logger
-
-
-## Console
-
-
-## Node Server Framework
-
-### Apresentação
-
-### Performance
-
-
-## Contato
-
-
-
-## License
-
-
+# busca por novos números primos
+# retorna maior primo encontrado
+$ curl --request GET \ --url http://localhost:3003/prime/discover
+```

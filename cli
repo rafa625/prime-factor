@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+const core1 = require('@nestjs/core')
+const console1 = require('@squareboat/nest-console')
+const yargs = require('yargs')
+const fs = require('fs')
+
+const appPath = './dist/src/app.module.js'
+
+function checkFileExistsSync(filepath) {
+  let flag = true
+  try {
+    fs.accessSync(filepath, fs.constants.F_OK)
+  } catch (e) {
+    console.log(e)
+    flag = false
+  }
+  return flag
+}
+
+if (!checkFileExistsSync(appPath)) { // CHANGE THE FILE TO CHECK IF NEEDED
+  console1.Logger.error(' PLEASE BUILD THE CLI PROJECT FIRST ')
+  console1.Logger.info('🪄  Run command: `yarn build` ') // CHANGE THE BUILD COMMAND IF NEEDED
+  return process.exit()
+}
+
+const app1 = require(appPath) // CHANGE THE IMPORT IF NEEDED
+
+let consoleLoggerLevel = process.env.CONSOLE_LOGGER_LEVEL.toLocaleLowerCase()
+let configLogger
+
+if (consoleLoggerLevel === 'true') {
+  configLogger = true
+} else if (consoleLoggerLevel === 'false') {
+  configLogger = false
+} else {
+  configLogger = [consoleLoggerLevel]
+}
+
+async function bootstrap() {
+  await core1.NestFactory.createApplicationContext(
+    app1.default,
+    { logger: configLogger },
+  )
+  const { argv } = yargs
+  const { _ } = argv
+  argv.command = _[0]
+  if (typeof argv.command !== 'string') {
+    console1.Logger.error(' PLEASE ADD A COMMAND ')
+    return process.exit()
+  }
+  const command = console1.CommandMeta.getCommand(argv.command)
+  if (!command || !command.target) {
+    console1.Logger.error(` ${argv.command} : command not found `)
+    return process.exit()
+  }
+  await console1.CommandRunner.handle(command, argv)
+  return process.exit()
+}
+
+bootstrap()
