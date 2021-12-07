@@ -1,7 +1,6 @@
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
+Calculador de fatores primos.
 ## Installation
 
 ```bash
