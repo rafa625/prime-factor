@@ -45,18 +45,6 @@ $ node cli factor
 $ node cli discover
 ```
 
-## CLI
-```bash
-# lista os comandos
-$ node cli list
-
-# fatora com primos um número fornecido
-$ node cli factor
-
-# busca por novos números primos
-$ node cli discover
-```
-
 ## API
 ```bash
 # fatora com primos um número fornecido
